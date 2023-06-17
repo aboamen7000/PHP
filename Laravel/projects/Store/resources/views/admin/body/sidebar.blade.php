@@ -30,16 +30,21 @@
 						<div class="menu-title">Brand</div>
 					</a>
 					<ul>
-						<li> <a href="index.html"><i class="bx bx-right-arrow-alt"></i>Default</a>
+						<!-- <li> <a href="index.html"><i class="bx bx-right-arrow-alt"></i>Default</a> -->
+							<li> <a href="{{ route('all.brand') }}"><i class="bx bx-right-arrow-alt"></i>All Brand</a>
 						</li>
-						<li> <a href="dashboard-eCommerce.html"><i class="bx bx-right-arrow-alt"></i>eCommerce</a>
+						<!-- <li> <a href="dashboard-eCommerce.html"><i class="bx bx-right-arrow-alt"></i>eCommerce</a>
 						</li>
 						<li> <a href="dashboard-analytics.html"><i class="bx bx-right-arrow-alt"></i>Analytics</a>
 						</li>
 						<li> <a href="dashboard-digital-marketing.html"><i class="bx bx-right-arrow-alt"></i>Digital Marketing</a>
 						</li>
-						<li> <a href="dashboard-human-resources.html"><i class="bx bx-right-arrow-alt"></i>Human Resources</a>
-						</li>
+						<li> <a href="dashboard-human-resources.html"><i class="bx bx-right-arrow-alt"></i>Human Resources</a> -->
+
+							<!-- <li> <a href="dashboard-eCommerce.html"><i class="bx bx-right-arrow-alt"></i>Add Brand </a>
+						</li> -->
+						<li> <a href="{{ route('add.brand') }}"><i class="bx bx-right-arrow-alt"></i>Add Brand </a>
+
 					</ul>
 				</li>
 				<li>
@@ -51,7 +56,11 @@
 					<ul>
 						<li> <a href="app-emailbox.html"><i class="bx bx-right-arrow-alt"></i>Email</a>
 						</li>
-						<li> <a href="app-chat-box.html"><i class="bx bx-right-arrow-alt"></i>Chat Box</a>
+						<li> 
+							
+							<!-- <a href="app-chat-box.html"><i class="bx bx-right-arrow-alt"></i>Chat Box</a> -->
+					<a href="{{ route('add.category') }}"><i class="bx bx-right-arrow-alt"></i>Add Category</a>
+						
 						</li>
 						<li> <a href="app-file-manager.html"><i class="bx bx-right-arrow-alt"></i>File Manager</a>
 						</li>

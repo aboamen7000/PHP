@@ -4,6 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Backend\BrandController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,12 +19,26 @@ use App\Http\Controllers\VendorController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('frontend.index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth'])->group(function() {
+
+Route::get('/dashboard', [UserController::class, 'UserDashboard'])->name('dashboard');
+
+Route::post('/user/profile/store', [UserController::class, 'UserProfileStore'])->name('user.profile.store');
+
+Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
+
+Route::post('/user/update/password', [UserController::class, 'UserUpdatePassword'])->name('user.update.password');
+
+}); // Gorup Milldeware End
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,16 +57,51 @@ Route::middleware(['auth','role:admin'])->group(function(){
     Route::get('/admin/logout', [AdminController::class, 'Admin_Logout'])->name('admin.logout');
 
     Route::get('/admin/profile', [AdminController::class, 'Admin_Profile'])->name('admin.profile');
-    
-});
+
+    Route::post('/admin/profile/store', [AdminController::class, 'Admin_Profile_Store'])->name('admin.profile.store');
+
+    Route::get('/admin/change/password', [AdminController::class, 'Admin_Change_Password'])->name('admin.change.password');
+
+    Route::post('/admin/update/password', [AdminController::class, 'Admin_Update_Password'])->name('update.password');
+
+     // Brand All Route 
+    Route::controller(BrandController::class)->group(function(){
+    Route::get('/all/brand' , 'AllBrand')->name('all.brand');
+    Route::get('/add/brand' , 'AddBrand')->name('add.brand');
+    Route::post('/store/brand' , 'StoreBrand')->name('store.brand');
+
+    Route::get('/edit/brand/{id}' , 'EditBrand')->name('edit.brand');
+    Route::post('/update/brand' , 'UpdateBrand')->name('update.brand');
+
+    Route::get('/delete/brand/{id}' , 'DeleteBrand')->name('delete.brand');
+    });
+
+
+}); // End Middleware 
+
+
 
 // Vendor Dashboard
 Route::middleware(['auth','role:vendor'])->group(function(){
 Route::get('/vendor/dashboard', [VendorController::class, 'Vendor_Dashboard'])->name('vendor.dashboard');
+
+Route::get('/vendor/logout', [VendorController::class, 'VendorDestroy'])->name('vendor.logout');
+
+Route::get('/vendor/profile', [VendorController::class, 'Vendor_Profile'])->name('vendor.profile');
+
+Route::post('/vendor/profile/store', [VendorController::class, 'Vendor_Profile_Store'])->name('vendor.profile.store');
+
+Route::get('/vendor/change/password', [VendorController::class, 'Vendor_Change_Password'])->name('vendor.change.password');
+
+Route::post('/vendor/update/password', [VendorController::class, 'Vendor_Update_Password'])->name('vendor.update.password');
+
 });
 
 
-  Route::get('/admin/login', [AdminController::class, 'Admin_Login'])->name('admin.login');
+Route::get('/admin/login', [AdminController::class, 'Admin_Login'])->name('admin.login');
+Route::get('/vendor/login', [VendorController::class, 'Vendor_Login'])->name('vendor.login');
+
+
 
   Route::redirect('/admin','/admin/login');
   Route::redirect('/vendor','/vendor/login');
